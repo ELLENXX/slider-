@@ -1,10 +1,12 @@
 class Slider{
-	constructor(ct,imgs) {
+	constructor(ct,imgs,circleStyle,btnStyle) {
 		this.currentPage=0;
 		this.pageCount=imgs.length;
 	    let width=ct.offsetWidth;
-		this.width=width;
 		let height=ct.offsetHeight;
+		this.width=width;
+		this.circleStyle=circleStyle;
+		this.btnStyle=btnStyle;
 		
 		this.innerCt=document.createElement('div');
 		this.innerCt.style.cssText='width:'+width*imgs.length+'px;'+'height:100%;padding:0px;margin:0px;overflow:hidden; position: relative;transition:transform 1s ease';
@@ -26,14 +28,14 @@ class Slider{
 			img.style.cssText='width:'+width+'px;'+'height:'+height+'px;';
 			
 			img.onload=()=>{
-				//img.style.cssText="width: 100%;height: 100%;"
 				img.style.marginTop=(height-img.height)/2+'px';
 					}
 			ct1.appendChild(img);
 			this.innerCt.appendChild(ct1);
 			
 			let c=document.createElement('div');
-			c.style.cssText='width:10px;height: 10px;border-radius: 10px;background-color: #fff;+display: inline-block;margin-left: 10px;float: left;'
+			
+			c.style.cssText=this.circleStyle+'display: inline-block;margin-left: 10px;float: left';
 			this.circles.push(c);
 			circleCt.appendChild(c);
 			c.addEventListener('mouseover',()=>{
@@ -41,8 +43,7 @@ class Slider{
 			})
 			
 		});
-		let css='position:absolute;top:50%;padding:0 10px;line-height:30px;background-color:#bbb;opacity:0.6;margin-top:-15px;';
-		
+		let css='position:absolute;top:50%;padding:0 10px;display: inline-block;float: left;margin-top:-15px;'+this.btnStyle;
 		let btnLeft=document.createElement('button')
 		btnLeft.innerHTML='<';
 		let btnRight=document.createElement('button')
@@ -78,7 +79,7 @@ class Slider{
 	
 	
 	slideTo(num){
-		this.circles[this.currentPage].style.backgroundColor="#fff";
+		this.circles[this.currentPage].style.cssText=this.circleStyle+'display: inline-block;margin-left: 10px;float: left';
 		this.circles[num].style.backgroundColor='red';
 		let left=-num*this.width;
 		console.log(left);
